@@ -1,12 +1,10 @@
+"""Setup settings variables to all modules."""
+from pydantic import BaseSettings
 
-# Pydantic base settings read automatically from env variables
-from pydantic import (
-    BaseSettings,
-    EmailStr,
-    HttpUrl,
-)
 
 class Settings(BaseSettings):
+    """Class to map directly all needed env variable."""
+
     POSTGRES_SERVER: str
     POSTGRES_USER: str
     POSTGRES_PASSWORD: str
