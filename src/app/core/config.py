@@ -11,7 +11,7 @@ class Settings(BaseSettings):
     POSTGRES_USER: str
     POSTGRES_PASSWORD: str
     POSTGRES_DB: str
-    SQLALCHEMY_DATABASE_URI: str
+    DATABASE_URI: str
 
 
 settings = Settings()
