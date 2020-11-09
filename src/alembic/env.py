@@ -1,14 +1,20 @@
 import os
 from logging.config import fileConfig
-from sqlalchemy import engine_from_config
-from sqlalchemy import pool
+
+from sqlalchemy import engine_from_config, pool
+
 from alembic import context
 
+
 def append_path():
+    """Set python path dinamically."""
     # For now we are changing %PYTHONPATH dinamically but later won't be needed
     # because we will use poetry for packaging.
     import sys
-    subdirs = [x[0] for x in os.walk(os.getcwd()) if x[0].split("/")[-1] != "__pycache__"]
+
+    subdirs = [
+        x[0] for x in os.walk(os.getcwd()) if x[0].split("/")[-1] != "__pycache__"
+    ]
     for dirs in subdirs:
         sys.path.append(dirs)
 
@@ -28,7 +34,8 @@ fileConfig(config.config_file_name)
 # from myapp import mymodel
 # target_metadata = mymodel.Base.metadata
 append_path()
-from app.db.base import Base
+from app.db.base import Base  # noqa
+
 target_metadata = Base.metadata
 
 # other values from the config, defined by the needs of env.py,
@@ -77,9 +84,7 @@ def run_migrations_online():
     )
 
     with connectable.connect() as connection:
-        context.configure(
-            connection=connection, target_metadata=target_metadata
-        )
+        context.configure(connection=connection, target_metadata=target_metadata)
 
         with context.begin_transaction():
             context.run_migrations()
