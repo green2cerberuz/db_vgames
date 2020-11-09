@@ -22,3 +22,9 @@ repos:
         entry: flake8
         types: [python]
         exclude: setup.py
+
+      - id: commit-msg
+        name: commit-msg
+        stages: [prepare-commit-msg]
+        language: system
+        entry: scripts/prepare-commit-message.sh
