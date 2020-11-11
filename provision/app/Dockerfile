@@ -2,17 +2,18 @@
 FROM python:3.8.2-alpine AS compile-image
 LABEL maintainer="green2cerberuz@gmail.com"
 
+ENV POETRY_VERSION=1.1.4
+ENV POETRY_VIRTUALENVS_PATH=/opt/venv
 WORKDIR /opt/app
 
-RUN apk add --no-cache python3-dev musl-dev postgresql-dev binutils gcc
+RUN apk add --no-cache python3-dev musl-dev libffi-dev postgresql-dev binutils gcc
 
 # Install pipenv
-RUN pip3 install pipenv
-RUN python3 -m venv /opt/venv
+RUN pip3 install pipenv && python3 -m venv /opt/venv && pip3 install "poetry==$POETRY_VERSION"
 ENV PATH="/opt/venv/bin:$PATH" VIRTUAL_ENV="/opt/venv"
 
-COPY ./provision/requirements.txt .
-RUN pip install -r requirements.txt && pip install psycopg2
+COPY pyproject.toml poetry.lock ./
+RUN poetry install
 
 # RUNTIME IMAGE
 FROM tiangolo/uvicorn-gunicorn:python3.8-alpine3.10 AS runtime-image
