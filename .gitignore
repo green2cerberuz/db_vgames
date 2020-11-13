@@ -125,3 +125,4 @@ staticfiles/
 *.db
 client-secret.json
 *.sql
+*.vscode

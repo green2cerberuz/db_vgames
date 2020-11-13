@@ -1,0 +1,50 @@
+version: "3.3"
+services:
+  app:
+    image: db_vgames
+    ports:
+      - 5000:5000
+    build:
+      context: .
+      dockerfile: ./provision/app/Dockerfile
+    command: uvicorn app.core.main:app --host 0.0.0.0 --port 5000 --reload
+    env_file:
+      - .env
+    stdin_open: true
+    tty: true
+    volumes:
+      - ./src:/usr/src
+    depends_on:
+      - db
+
+  db:
+    restart: always
+    image: postgres:12.0
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=videogames
+    env_file:
+      - .env
+    volumes:
+      - db:/var/lib/postgresql/data
+      - .:/usr/src
+
+  pgadmin:
+    container_name: pgadmin
+    image: dpage/pgadmin4
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=pgadmin4@pgadmin.org
+      - PGADMIN_DEFAULT_PASSWORD=admin
+    env_file:
+      - .env
+    ports:
+      - "5050:80"
+    depends_on:
+      - db
+
+volumes:
+  db:
+  # name: videogames_data
