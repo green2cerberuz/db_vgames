@@ -1,11 +1,13 @@
 """Setup settings variables to all modules."""
+import os
+
 from pydantic import BaseSettings
 
 
 class Settings(BaseSettings):
     """Class to map directly all needed env variable."""
 
-    POSTGRES_SERVER: str
+    print(os.environ)
     POSTGRES_USER: str
     POSTGRES_PASSWORD: str
     POSTGRES_DB: str

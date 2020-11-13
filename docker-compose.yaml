@@ -1,4 +1,4 @@
-version: "3"
+version: "3.3"
 services:
   app:
     image: db_vgames
@@ -26,6 +26,8 @@ services:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
       - POSTGRES_DB=videogames
+    env_file:
+      - .env
     volumes:
       - db:/var/lib/postgresql/data
       - .:/usr/src
@@ -36,6 +38,8 @@ services:
     environment:
       - PGADMIN_DEFAULT_EMAIL=pgadmin4@pgadmin.org
       - PGADMIN_DEFAULT_PASSWORD=admin
+    env_file:
+      - .env
     ports:
       - "5050:80"
     depends_on:
@@ -43,4 +47,4 @@ services:
 
 volumes:
   db:
-    name: videogames_data
+  # name: videogames_data
