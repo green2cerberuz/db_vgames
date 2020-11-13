@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "db_vgames"
-version = "0.1.0"
+version = "1.0.0"
 description = "Package for my games database client"
 authors = ["Cristhian Bravo <green2cerberuz@gmail.com>"]
 license = "MIT"
