@@ -41,3 +41,16 @@ To speedup build process and you are in linux, you can set the following env var
 `export DOCKER_BUILDKIT=1`
 
 `export OMPOSE_DOCKER_CLI_BUILD=1`
+
+## Migrations
+
+To run alembic and geenrate the migrations type:
+
+`docker-compose run --rm app alembic revision --autogenerate -m <message>`
+
+The to generate the models in database run:
+
+`docker-compose run --rm app alembic upgrade head`
+
+To see if tables are generated correctly, you can log in to pgadmin and check
+models tables generated.

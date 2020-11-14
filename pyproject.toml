@@ -33,6 +33,7 @@ include_trailing_comma=true
 force_grid_wrap=0
 use_parentheses=true
 line_length=88
+skip_glob="*/alembic/versions/*.py"
 
 [tool.pylint.messages_control]
 disable = "C0330, C0326"
