@@ -7,8 +7,8 @@ class Base:
     """Declarative base class to use with SQLAlchemy."""
 
     id = Column(Integer, primary_key=True)
-    # Generate __tablename__ automatically
 
+    # Generate __tablename__ automatically
     @declared_attr
     def __tablename__(cls) -> str:
         """Conver tables name to lowercase."""
