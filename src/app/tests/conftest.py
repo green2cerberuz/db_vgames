@@ -1,10 +1,10 @@
 from typing import Generator
 
 import pytest
+from fastapi.testclient import TestClient
 
 from app.core.main import app
 from app.db.session import SessionLocal
-from fastapi.testclient import TestClient
 
 
 @pytest.fixture(scope="session")
