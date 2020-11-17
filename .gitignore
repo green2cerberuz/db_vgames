@@ -126,3 +126,4 @@ staticfiles/
 client-secret.json
 *.sql
 *.vscode
+src/app/graphene_pydantic
