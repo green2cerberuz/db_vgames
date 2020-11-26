@@ -1,18 +1,24 @@
 import graphene
 
+from app.schemas.console import ConsoleOutput
+
+from .mutations import CreateConsole
+from .resolvers import resolve_console
+
 
 class ConsoleQuery(graphene.ObjectType):
     """Queries to get all console information."""
 
-    say_hello = graphene.String(name=graphene.String(default_value="Test Driven"))
+    # consoles = graphene.List(graphene.relay.Node.Field(ConsoleNode))
+    # consoles = SQLAlchemyConnectionField(ConsoleNode.connection)
+    consoles = graphene.List(ConsoleOutput)
 
-    @staticmethod
-    async def resolve_say_hello(parent, info, name):
-        """Test resolver function."""
-        return f"Hello {name}"
+    async def resolve_consoles(parent, info, **kwargs):
+        """Wrap resolver function."""
+        return await resolve_console(parent, info, **kwargs)
 
 
-# class ConsoleMutation(graphene.ObjectType):
-#     """Mutation related to object model."""
+class ConsoleMutation(graphene.ObjectType):
+    """Mutations related to object model."""
 
-#     pass
+    create_console = CreateConsole.Field()

@@ -5,7 +5,7 @@ from starlette.graphql import GraphQLApp
 from app.db.async_db import database
 from app.models.game import Game
 
-from .api.client import client_schema
+from .client import client_schema
 
 app = FastAPI()
 app.add_route(

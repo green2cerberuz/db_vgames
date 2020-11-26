@@ -25,7 +25,7 @@ class FranchiseAssociation(Base):
     franchise = relationship("Franchise", backref="related_franchise")
 
     game_id = Column(Integer, ForeignKey("game.id", ondelete="CASCADE"))
-    game = relationship("Games", backref="related_franchise")
+    game = relationship("Game", backref="related_franchise")
 
     console_id = Column(Integer, ForeignKey("console.id", ondelete="CASCADE"))
     console = relationship("Console", backref="related_franchise")

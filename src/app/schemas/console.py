@@ -1,19 +1,20 @@
 from datetime import datetime
 from typing import Optional
 
-from graphene_pydantic import PydanticObjectType
 from pydantic import BaseModel
+
+from app.graphene_pydantic import PydanticInputObjectType, PydanticObjectType
 
 
 class ConsoleBase(BaseModel):
     """Console base class with basic fields  to get in fast api endpoints."""
 
     name: Optional[str] = None
-    release_year: Optional[datetime] = None
+    release_year: Optional[str] = None
     description: Optional[str] = None
     cover: Optional[str] = None
     description: Optional[str] = None
-    motto: Optional[int] = None
+    motto: Optional[str] = None
     company_id: Optional[str] = None
 
 
@@ -31,8 +32,8 @@ class ConsoleUpdate(ConsoleBase):
     pass
 
 
-class ConsoleInDBBase(ConsoleBase):
-    """Properties shared by models stored in DB."""
+class ConsoleDB(ConsoleBase):
+    """Properties to return to client."""
 
     id: int
 
@@ -40,13 +41,18 @@ class ConsoleInDBBase(ConsoleBase):
         orm_mode = True
 
 
-class ConsoleDB(ConsoleInDBBase):
-    """Properties to return to client."""
+class ConsoleInput(PydanticInputObjectType):
+    """Pydantic validator class."""
 
-    pass
+    class Meta:
+        model = ConsoleDB
+        exclude_fields = (
+            "id",
+            "company_id",
+        )
 
 
-class ConsoleGrapheneModel(PydanticObjectType):
+class ConsoleOutput(PydanticObjectType):
     """Pydantic validator class."""
 
     class Meta:
