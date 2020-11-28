@@ -56,7 +56,11 @@ def run_migrations_offline():
     script output.
 
     """
-    url = os.getenv("DATABASE_URI")
+    if os.getenv("TEST", False):
+        url = os.getenv("TEST_DATABASE_URI")
+    else:
+        url = os.getenv("DATABASE_URI")
+
     context.configure(
         url=url,
         target_metadata=target_metadata,
@@ -64,8 +68,13 @@ def run_migrations_offline():
         dialect_opts={"paramstyle": "named"},
     )
 
-    with context.begin_transaction():
-        context.run_migrations()
+    try:
+        with context.begin_transaction():
+            context.run_migrations()
+    except Exception as exception:
+        print(exception)
+        # logging.error(exception)
+        raise exception
 
 
 def run_migrations_online():
@@ -76,7 +85,10 @@ def run_migrations_online():
 
     """
     configuration = config.get_section(config.config_ini_section)
-    configuration["sqlalchemy.url"] = os.getenv("DATABASE_URI")
+    if os.getenv("TEST", False):
+        configuration["sqlalchemy.url"] = os.getenv("TEST_DATABASE_URI")
+    else:
+        configuration["sqlalchemy.url"] = os.getenv("DATABASE_URI")
     connectable = engine_from_config(
         configuration,
         prefix="sqlalchemy.",
@@ -86,8 +98,19 @@ def run_migrations_online():
     with connectable.connect() as connection:
         context.configure(connection=connection, target_metadata=target_metadata)
 
-        with context.begin_transaction():
-            context.run_migrations()
+        try:
+            with context.begin_transaction():
+                context.run_migrations()
+        except Exception as exception:
+            print(exception)
+            # logging.error(exception)
+            raise exception
+        finally:
+            connection.close()
+
+        # original one
+        # with context.begin_transaction():
+        #     context.run_migrations()
 
 
 if context.is_offline_mode():

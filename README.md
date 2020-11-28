@@ -20,10 +20,14 @@ Password: `admin`
 You can change the default email and password using
 `PGADMIN_DEFAULT_EMAIL` `PGADMIN_DEFAULT_PASSWORD` inside a .env file in the root directory.
 
+Notes:
+We have multiple ways to pass env variables to docker-compose, we can pass .env file in docker-compose up command line, also we can do variable substitution inside
+a compose file, or just pass the complete .env file path inside docker-compose yaml.On this project we are a using the 3 methods mentioned above.
+
 Project is setup to use pre-commit to run test before a commit, but if you want
 to run them manually you can use:
 
-`docker-compose run --rm app pytest`
+`docker-compose run --rm -e TEST=True app pytest`
 
 To create a coverage report you can use:
 
