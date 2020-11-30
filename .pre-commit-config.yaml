@@ -29,8 +29,8 @@ repos:
         language: system
         entry: scripts/prepare-commit-message.sh
 
-      - id: pytest
-        name: pytest
-        stages: [commit]
-        language: system
-        entry: scripts/run_tests.sh
+      # - id: pytest
+      #   name: pytest
+      #   stages: [commit]
+      #   language: system
+      #   entry: scripts/run_tests.sh

@@ -41,7 +41,6 @@ async def test_async_db_connection():
     Test simple asyncronous connection to database
     """
     TEST_DATABASE_URI = os.getenv("TEST_DATABASE_URI")
-    # database = Database(TEST_DATABASE_URI)
     async with Database(TEST_DATABASE_URI) as database:
         result = await database.execute("SELECT 1")
         assert result == 1
