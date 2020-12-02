@@ -2,7 +2,7 @@ import graphene
 
 from app.schemas.console import ConsoleOutput
 
-from .mutations import CreateConsole
+from .mutations import CreateConsole, DeleteConsole, UpdateConsole
 from .resolvers import resolve_console
 
 
@@ -22,3 +22,5 @@ class ConsoleMutation(graphene.ObjectType):
     """Mutations related to object model."""
 
     create_console = CreateConsole.Field()
+    update_console = UpdateConsole.Field()
+    delete_console = DeleteConsole.Field()

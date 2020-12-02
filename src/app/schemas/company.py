@@ -6,19 +6,17 @@ from pydantic import BaseModel
 from app.graphene_pydantic import PydanticInputObjectType, PydanticObjectType
 
 
-class ConsoleBase(BaseModel):
+class CompanyBase(BaseModel):
     """Console base class with basic fields  to get in fast api endpoints."""
 
     name: Optional[str] = None
-    release_year: Optional[str] = None
+    creation_year: Optional[str] = None
     description: Optional[str] = None
-    cover: Optional[str] = None
-    description: Optional[str] = None
-    motto: Optional[str] = None
-    company_id: Optional[str] = None
+    logo: Optional[str] = None
+    is_publisher: Optional[bool] = None
 
 
-class Console(ConsoleBase):
+class Company(CompanyBase):
     """Properties to receive inside endpoint."""
 
     name: str
@@ -26,13 +24,13 @@ class Console(ConsoleBase):
     release_year: datetime
 
 
-class ConsoleUpdate(ConsoleBase):
+class CompanyUpdate(CompanyBase):
     """Properties to receive in update."""
 
     pass
 
 
-class ConsoleDB(ConsoleBase):
+class CompanyDB(CompanyBase):
     """Properties to return to client."""
 
     id: int
@@ -41,27 +39,23 @@ class ConsoleDB(ConsoleBase):
         orm_mode = True
 
 
-class ConsoleInput(PydanticInputObjectType):
+class CompanyInput(PydanticInputObjectType):
     """Pydantic validator class."""
 
     class Meta:
-        model = ConsoleDB
-        exclude_fields = (
-            "id",
-            "company_id",
-        )
+        model = CompanyDB
+        exclude_fields = ("id",)
 
 
-class ConsoleUpdateInput(PydanticInputObjectType):
+class CompanyUpdateInput(PydanticInputObjectType):
     """Pydantic validator class."""
 
     class Meta:
-        model = ConsoleDB
-        exclude_fields = ("company_id",)
+        model = CompanyDB
 
 
-class ConsoleOutput(PydanticObjectType):
+class CompanyOutput(PydanticObjectType):
     """Pydantic validator class."""
 
     class Meta:
-        model = ConsoleDB
+        model = CompanyDB
