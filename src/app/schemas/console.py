@@ -1,9 +1,10 @@
 from datetime import datetime
-from typing import Optional
+from typing import List, Optional
 
 from pydantic import BaseModel
 
 from app.graphene_pydantic import PydanticInputObjectType, PydanticObjectType
+from app.schemas.company import CompanyDB
 
 
 class ConsoleBase(BaseModel):
@@ -15,7 +16,9 @@ class ConsoleBase(BaseModel):
     cover: Optional[str] = None
     description: Optional[str] = None
     motto: Optional[str] = None
-    company_id: Optional[str] = None
+    company_id: Optional[int] = None
+    # FIXME: this should work but it does not, need to check it for references
+    # company: Optional[List[Company]] = None
 
 
 class Console(ConsoleBase):
@@ -36,6 +39,7 @@ class ConsoleDB(ConsoleBase):
     """Properties to return to client."""
 
     id: int
+    company: Optional[List[CompanyDB]]
 
     class Config:
         orm_mode = True
@@ -46,10 +50,7 @@ class ConsoleInput(PydanticInputObjectType):
 
     class Meta:
         model = ConsoleDB
-        exclude_fields = (
-            "id",
-            "company_id",
-        )
+        exclude_fields = ("id",)
 
 
 class ConsoleUpdateInput(PydanticInputObjectType):
@@ -57,7 +58,7 @@ class ConsoleUpdateInput(PydanticInputObjectType):
 
     class Meta:
         model = ConsoleDB
-        exclude_fields = ("company_id",)
+        # exclude_fields = ("company_id",)
 
 
 class ConsoleOutput(PydanticObjectType):

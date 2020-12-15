@@ -21,7 +21,7 @@ class Company(CompanyBase):
 
     name: str
     company_id: str
-    release_year: datetime
+    creation_year: datetime
 
 
 class CompanyUpdate(CompanyBase):
