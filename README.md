@@ -48,11 +48,15 @@ To speedup build process and you are in linux, you can set the following env var
 
 ## Migrations
 
-To run alembic and geenrate the migrations type:
+If for any reasons when using docker-compose up you have an error about database `<your-database-name>` does not exist. You can run:
+
+`docker exec -it db_vgames_db_1 /bin/sh` and then run `createdb <your-db-name> -U <postgres username>`
+
+To run alembic and geenrate the migrations if you dont have the files run:
 
 `docker-compose run --rm app alembic revision --autogenerate -m <message>`
 
-The to generate the models in database run:
+To generate the models in database run:
 
 `docker-compose run --rm app alembic upgrade head`
 
