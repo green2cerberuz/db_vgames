@@ -2,6 +2,7 @@
 FROM python:3.8.2-alpine AS compile-image
 LABEL maintainer="green2cerberuz@gmail.com"
 
+ENV CRYPTOGRAPHY_DONT_BUILD_RUST 1
 ENV POETRY_VERSION=1.1.4
 ENV POETRY_VIRTUALENVS_PATH=/opt/venv
 WORKDIR /opt/app
